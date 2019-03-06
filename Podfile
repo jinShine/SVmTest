@@ -7,14 +7,17 @@ target 'SVmiOS' do
 
   # Pods for SVmiOS
 
-  # RX
+    # RX
 	pod 'RxSwift', '~> 4.0'
 	pod 'RxCocoa', '~> 4.0'
     
-  # Image
+    # Image
 	pod 'Kingfisher', '~> 4.0'
     
-  # UI
+    # UI
 	pod 'SnapKit', '~> 4.0.0'
+    
+    # Network
+    pod 'Alamofire', '~> 4.0'
     
 end
