@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		3B6BFC5633FCE129B072A1D9 /* Pods_SVmiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E06D55F1857F527B4CFBD5 /* Pods_SVmiOS.framework */; };
 		5CAA0A8E222F5BC000BDE83B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A8D222F5BC000BDE83B /* AppDelegate.swift */; };
-		5CAA0A90222F5BC000BDE83B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A8F222F5BC000BDE83B /* ViewController.swift */; };
 		5CAA0A93222F5BC000BDE83B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CAA0A91222F5BC000BDE83B /* Main.storyboard */; };
 		5CAA0A95222F5BC100BDE83B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CAA0A94222F5BC100BDE83B /* Assets.xcassets */; };
 		5CAA0A98222F5BC100BDE83B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CAA0A96222F5BC100BDE83B /* LaunchScreen.storyboard */; };
 		5CAA0AA9222F601100BDE83B /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AA8222F601100BDE83B /* ViewType.swift */; };
 		5CAA0AAB222F602000BDE83B /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AAA222F602000BDE83B /* ViewModelType.swift */; };
 		5CAA0AAD222F617800BDE83B /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AAC222F617800BDE83B /* ProvideObject.swift */; };
+		5CAA0AB0222F65DB00BDE83B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AAF222F65DB00BDE83B /* Router.swift */; };
+		5CAA0AB2222F66AB00BDE83B /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB1222F66AB00BDE83B /* TargetType.swift */; };
+		5CAA0AB5222F8AF800BDE83B /* AllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */; };
+		5CAA0AB7222F8B0500BDE83B /* AllUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5CAA0A8A222F5BC000BDE83B /* SVmiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SVmiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CAA0A8D222F5BC000BDE83B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CAA0A8F222F5BC000BDE83B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5CAA0A92222F5BC000BDE83B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CAA0A94222F5BC100BDE83B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CAA0A97222F5BC100BDE83B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -29,6 +31,10 @@
 		5CAA0AA8222F601100BDE83B /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		5CAA0AAA222F602000BDE83B /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		5CAA0AAC222F617800BDE83B /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
+		5CAA0AAF222F65DB00BDE83B /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		5CAA0AB1222F66AB00BDE83B /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserViewController.swift; sourceTree = "<group>"; };
+		5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserViewModel.swift; sourceTree = "<group>"; };
 		86E06D55F1857F527B4CFBD5 /* Pods_SVmiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SVmiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7BA614EB74FC00314D2993 /* Pods-SVmiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVmiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SVmiOS/Pods-SVmiOS.release.xcconfig"; sourceTree = "<group>"; };
 		C01FD656112D0778A17DC91E /* Pods-SVmiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVmiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SVmiOS/Pods-SVmiOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				5CAA0AA1222F5F2000BDE83B /* Base */,
+				5CAA0AAE222F65BA00BDE83B /* Router */,
 				5CAA0AA7222F5F7F00BDE83B /* Contents */,
 				5CAA0AA4222F5F4C00BDE83B /* Service */,
 				5CAA0AA3222F5F4600BDE83B /* Model */,
@@ -131,9 +138,27 @@
 		5CAA0AA7222F5F7F00BDE83B /* Contents */ = {
 			isa = PBXGroup;
 			children = (
-				5CAA0A8F222F5BC000BDE83B /* ViewController.swift */,
+				5CAA0AB3222F8A8300BDE83B /* AllUser */,
 			);
 			path = Contents;
+			sourceTree = "<group>";
+		};
+		5CAA0AAE222F65BA00BDE83B /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				5CAA0AB1222F66AB00BDE83B /* TargetType.swift */,
+				5CAA0AAF222F65DB00BDE83B /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		5CAA0AB3222F8A8300BDE83B /* AllUser */ = {
+			isa = PBXGroup;
+			children = (
+				5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */,
+				5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */,
+			);
+			path = AllUser;
 			sourceTree = "<group>";
 		};
 		65B23C9073B33EF78ECDC2D5 /* Frameworks */ = {
@@ -285,9 +310,12 @@
 			files = (
 				5CAA0AAB222F602000BDE83B /* ViewModelType.swift in Sources */,
 				5CAA0AA9222F601100BDE83B /* ViewType.swift in Sources */,
-				5CAA0A90222F5BC000BDE83B /* ViewController.swift in Sources */,
+				5CAA0AB7222F8B0500BDE83B /* AllUserViewModel.swift in Sources */,
 				5CAA0A8E222F5BC000BDE83B /* AppDelegate.swift in Sources */,
+				5CAA0AB0222F65DB00BDE83B /* Router.swift in Sources */,
+				5CAA0AB5222F8AF800BDE83B /* AllUserViewController.swift in Sources */,
 				5CAA0AAD222F617800BDE83B /* ProvideObject.swift in Sources */,
+				5CAA0AB2222F66AB00BDE83B /* TargetType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

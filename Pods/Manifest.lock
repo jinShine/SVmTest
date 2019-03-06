@@ -9,7 +9,7 @@ PODS:
   - SnapKit (4.0.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire
   - Kingfisher (~> 4.0)
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
@@ -32,6 +32,6 @@ SPEC CHECKSUMS:
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: ffd651869fd26c6b2aa60ed8074f4abafe657366
+PODFILE CHECKSUM: c70d9402fa1b59a99a56b304cfec50df20a18908
 
 COCOAPODS: 1.5.3

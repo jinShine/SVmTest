@@ -10,6 +10,7 @@ target 'SVmiOS' do
     # RX
 	pod 'RxSwift', '~> 4.0'
 	pod 'RxCocoa', '~> 4.0'
+    pod 'RxDataSources', '~> 3.0'
     
     # Image
 	pod 'Kingfisher', '~> 4.0'
@@ -18,6 +19,6 @@ target 'SVmiOS' do
 	pod 'SnapKit', '~> 4.0.0'
     
     # Network
-    pod 'Alamofire', '~> 4.0'
+    pod 'Alamofire'
     
 end

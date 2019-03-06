@@ -10,5 +10,16 @@ import RxSwift
 import RxCocoa
 
 enum ProvideObject {
-    
+    case allUser
+}
+
+extension ProvideObject {
+    var viewController: UIViewController {
+        switch self {
+        case .allUser:
+            let viewModel = AllUserViewModel()
+            let viewController = AllUserViewController.create(with: viewModel)
+            return viewController
+        }
+    }
 }
