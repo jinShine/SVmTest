@@ -6,6 +6,7 @@
 //  Copyright © 2019 승진김. All rights reserved.
 //
 
+import RxSwift
 import Alamofire
 
 
@@ -55,6 +56,33 @@ extension Router: TargetType {
             ]
         }
     }
+    
+    static let manager: Alamofire.SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 30
+        configuration.httpCookieStorage = HTTPCookieStorage.shared
+        configuration.urlCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }()
+    
+    static func buildRequest(url: URLRequestConvertible) -> Single<Data> {
+        return Single.create(subscribe: { (observer) -> Disposable in
+            Router.manager.request(url)
+                .validate(statusCode: 200..<400)
+                .responseData(completionHandler: { data in
+                    switch data.result {
+                    case .success(let value):
+                        observer(.success(value))
+                    case .failure(let error):
+                        observer(.error(ServiceError.requestFailed(error)))
+                    }
+                })
+            return Disposables.create()
+        })
+    }
+    
 }
 
 extension Router: URLRequestConvertible {
@@ -63,8 +91,8 @@ extension Router: URLRequestConvertible {
         case .getAllUser:
             let url = self.baseURL.appendingPathComponent(self.path)
             var urlRequest = try URLRequest(url: url, method: self.method, headers: self.header)
-            print(urlRequest)
             urlRequest = try URLEncoding.default.encode(urlRequest, with: self.parameter)
+            print(urlRequest)
             return urlRequest
         }
     }

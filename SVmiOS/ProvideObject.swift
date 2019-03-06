@@ -17,7 +17,7 @@ extension ProvideObject {
     var viewController: UIViewController {
         switch self {
         case .allUser:
-            let viewModel = AllUserViewModel()
+            let viewModel = AllUserViewModel(gitHubService: GitHubService())
             let viewController = AllUserViewController.create(with: viewModel)
             return viewController
         }

@@ -19,6 +19,13 @@
 		5CAA0AB2222F66AB00BDE83B /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB1222F66AB00BDE83B /* TargetType.swift */; };
 		5CAA0AB5222F8AF800BDE83B /* AllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */; };
 		5CAA0AB7222F8B0500BDE83B /* AllUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */; };
+		5CAA0AB9222F90CC00BDE83B /* AllUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AB8222F90CC00BDE83B /* AllUserTableViewCell.swift */; };
+		5CAA0ABD222FA4F900BDE83B /* GitHubServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0ABC222FA4F900BDE83B /* GitHubServiceType.swift */; };
+		5CAA0ABF222FA7D300BDE83B /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0ABE222FA7D300BDE83B /* UserModel.swift */; };
+		5CAA0AC1222FAA4200BDE83B /* GitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AC0222FAA4200BDE83B /* GitHubService.swift */; };
+		5CAA0AC3222FB24600BDE83B /* Rx+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AC2222FB24600BDE83B /* Rx+Alamofire.swift */; };
+		5CAA0AC5222FB25D00BDE83B /* Rx+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AC4222FB25D00BDE83B /* Rx+UIViewController.swift */; };
+		5CAA0AC7222FB84E00BDE83B /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0AC6222FB84E00BDE83B /* ServiceError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +42,13 @@
 		5CAA0AB1222F66AB00BDE83B /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserViewController.swift; sourceTree = "<group>"; };
 		5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserViewModel.swift; sourceTree = "<group>"; };
+		5CAA0AB8222F90CC00BDE83B /* AllUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserTableViewCell.swift; sourceTree = "<group>"; };
+		5CAA0ABC222FA4F900BDE83B /* GitHubServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubServiceType.swift; sourceTree = "<group>"; };
+		5CAA0ABE222FA7D300BDE83B /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		5CAA0AC0222FAA4200BDE83B /* GitHubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubService.swift; sourceTree = "<group>"; };
+		5CAA0AC2222FB24600BDE83B /* Rx+Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Alamofire.swift"; sourceTree = "<group>"; };
+		5CAA0AC4222FB25D00BDE83B /* Rx+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+UIViewController.swift"; sourceTree = "<group>"; };
+		5CAA0AC6222FB84E00BDE83B /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		86E06D55F1857F527B4CFBD5 /* Pods_SVmiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SVmiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7BA614EB74FC00314D2993 /* Pods-SVmiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVmiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SVmiOS/Pods-SVmiOS.release.xcconfig"; sourceTree = "<group>"; };
 		C01FD656112D0778A17DC91E /* Pods-SVmiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVmiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SVmiOS/Pods-SVmiOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,6 +131,7 @@
 		5CAA0AA3222F5F4600BDE83B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5CAA0ABE222FA7D300BDE83B /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -124,6 +139,9 @@
 		5CAA0AA4222F5F4C00BDE83B /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				5CAA0ABC222FA4F900BDE83B /* GitHubServiceType.swift */,
+				5CAA0AC0222FAA4200BDE83B /* GitHubService.swift */,
+				5CAA0AC6222FB84E00BDE83B /* ServiceError.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -131,6 +149,8 @@
 		5CAA0AA5222F5F5400BDE83B /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				5CAA0AC4222FB25D00BDE83B /* Rx+UIViewController.swift */,
+				5CAA0AC2222FB24600BDE83B /* Rx+Alamofire.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -157,6 +177,7 @@
 			children = (
 				5CAA0AB4222F8AF800BDE83B /* AllUserViewController.swift */,
 				5CAA0AB6222F8B0500BDE83B /* AllUserViewModel.swift */,
+				5CAA0AB8222F90CC00BDE83B /* AllUserTableViewCell.swift */,
 			);
 			path = AllUser;
 			sourceTree = "<group>";
@@ -279,9 +300,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SVmiOS/Pods-SVmiOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
@@ -290,9 +313,11 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
@@ -308,6 +333,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CAA0AC7222FB84E00BDE83B /* ServiceError.swift in Sources */,
+				5CAA0AC3222FB24600BDE83B /* Rx+Alamofire.swift in Sources */,
+				5CAA0AC1222FAA4200BDE83B /* GitHubService.swift in Sources */,
+				5CAA0AB9222F90CC00BDE83B /* AllUserTableViewCell.swift in Sources */,
+				5CAA0ABD222FA4F900BDE83B /* GitHubServiceType.swift in Sources */,
 				5CAA0AAB222F602000BDE83B /* ViewModelType.swift in Sources */,
 				5CAA0AA9222F601100BDE83B /* ViewType.swift in Sources */,
 				5CAA0AB7222F8B0500BDE83B /* AllUserViewModel.swift in Sources */,
@@ -315,6 +345,8 @@
 				5CAA0AB0222F65DB00BDE83B /* Router.swift in Sources */,
 				5CAA0AB5222F8AF800BDE83B /* AllUserViewController.swift in Sources */,
 				5CAA0AAD222F617800BDE83B /* ProvideObject.swift in Sources */,
+				5CAA0ABF222FA7D300BDE83B /* UserModel.swift in Sources */,
+				5CAA0AC5222FB25D00BDE83B /* Rx+UIViewController.swift in Sources */,
 				5CAA0AB2222F66AB00BDE83B /* TargetType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
