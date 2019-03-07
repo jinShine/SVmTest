@@ -18,10 +18,17 @@ import Alamofire
  */
 
 enum Router {
-    case getAllUser(since: Int)
+    case allUser(since: Int)
+    case userDetail(name: String)
+    case userRepo(name: String)
 }
 
 extension Router: TargetType {
+    
+    // GitHub Key
+    static let clientID: String = "075f9bae947051708b29"
+    static let clientSecret: String = "e5593a561341875f9a5a768bca8d74b398aff81e"
+    
     
     var baseURL: URL {
         return URL(string: "https://api.github.com")!
@@ -29,31 +36,39 @@ extension Router: TargetType {
     
     var path: String {
         switch self {
-        case .getAllUser:
+        case .allUser:
             return "/users"
+        case .userDetail(let name):
+            return "/users/\(name)"
+        case .userRepo(let name):
+            return "/users/\(name)/repos"
         }
     }
-    
+//    https://api.github.com/users?client_id=075f9bae947051708b29&client_secret=e5593a561341875f9a5a768bca8d74b398aff81e&since=0
     var method: HTTPMethod {
         switch self {
-        case .getAllUser:
+        case .allUser, .userDetail, .userRepo:
             return .get
         }
     }
     
     var header: HTTPHeaders {
         switch self {
-        case .getAllUser:
+        case .allUser, .userDetail, .userRepo:
             return [:]
         }
     }
     
     var parameter: Parameters {
         switch self {
-        case .getAllUser(let since):
+        case .allUser(let since):
             return [
-                "since" : since
+                "since" : since,
+                "client_id" : Router.clientID,
+                "client_secret" : Router.clientSecret
             ]
+        case .userDetail, .userRepo:
+            return [:]
         }
     }
     
@@ -88,7 +103,7 @@ extension Router: TargetType {
 extension Router: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         switch self {
-        case .getAllUser:
+        case .allUser, .userDetail, .userRepo:
             let url = self.baseURL.appendingPathComponent(self.path)
             var urlRequest = try URLRequest(url: url, method: self.method, headers: self.header)
             urlRequest = try URLEncoding.default.encode(urlRequest, with: self.parameter)

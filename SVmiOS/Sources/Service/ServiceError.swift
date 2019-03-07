@@ -11,4 +11,5 @@ import Foundation
 enum ServiceError: Error {
     case unknown
     case requestFailed(Error)
+    case decodeError
 }

@@ -13,11 +13,49 @@ import Alamofire
 struct GitHubService: GitHubServiceType {
     
     func requestGitHubAllUser(since: Int) -> Single<[UserModel]> {
-        return Router.buildRequest(url: Router.getAllUser(since: since))
+        return Router.buildRequest(url: Router.allUser(since: since))
             .map { data throws in
                 let users = try JSONDecoder().decode([UserModel].self, from: data)
                 return users
             }
+    }
+    
+    func requestGitHubUserDetail(name: String, completion: @escaping (Result<UserDetailModel>) -> ()) {
+        Alamofire.request(Router.userDetail(name: name))
+            .validate(statusCode: 200..<400)
+            .responseData { response in
+                switch response.result {
+                case .success(let value):
+                    do {
+                        let result = try JSONDecoder().decode(UserDetailModel.self, from: value)
+                        print(result)
+                        completion(Result.success(result))
+                    } catch {
+                        completion(Result.failure(ServiceError.decodeError))
+                    }
+                case .failure(let error):
+                    completion(Result.failure(ServiceError.requestFailed(error)))
+                }
+        }
+    }
+    
+    func requestGitHubUserRepositories(name: String, completion: @escaping (Result<[UserRepositoryModel]>) -> ()) {
+        Alamofire.request(Router.userRepo(name: name))
+            .validate(statusCode: 200..<400)
+            .responseData { response in
+                switch response.result {
+                case .success(let value):
+                    do {
+                        let result = try JSONDecoder().decode([UserRepositoryModel].self, from: value)
+                        print(result)
+                        completion(Result.success(result))
+                    } catch {
+                        completion(Result.failure(ServiceError.decodeError))
+                    }
+                case .failure(let error):
+                    completion(Result.failure(ServiceError.requestFailed(error)))
+                }
+        }
     }
 }
 

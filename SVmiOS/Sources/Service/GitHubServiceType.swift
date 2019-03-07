@@ -7,7 +7,10 @@
 //
 
 import RxSwift
+import Alamofire
 
 protocol GitHubServiceType {
     func requestGitHubAllUser(since: Int) -> Single<[UserModel]>
+    func requestGitHubUserDetail(name: String, completion: @escaping (Result<UserDetailModel>) -> ())
+    func requestGitHubUserRepositories(name: String, completion: @escaping (Result<[UserRepositoryModel]>) -> ())
 }
