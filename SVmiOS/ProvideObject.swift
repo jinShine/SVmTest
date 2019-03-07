@@ -11,6 +11,7 @@ import RxCocoa
 
 enum ProvideObject {
     case allUser
+    case userRepositories(name: String)
 }
 
 extension ProvideObject {
@@ -19,6 +20,10 @@ extension ProvideObject {
         case .allUser:
             let viewModel = AllUserViewModel(gitHubService: GitHubService())
             let viewController = AllUserViewController.create(with: viewModel)
+            return viewController
+            
+        case .userRepositories(let name):
+            let viewController = UserRepositoriesViewController(userName: name, gitHubService: GitHubService())
             return viewController
         }
     }

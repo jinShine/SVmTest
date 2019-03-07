@@ -9,7 +9,7 @@
 import Foundation
 
 struct UserModel: Decodable {
-    var id: String = ""
+    var id: Int = 0
     var name: String = ""
     var profile: String = ""
     
@@ -19,3 +19,4 @@ struct UserModel: Decodable {
         case profile = "avatar_url"
     }
 }
+

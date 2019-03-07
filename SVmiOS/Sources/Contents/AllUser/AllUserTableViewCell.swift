@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class AllUserTableViewCell: UITableViewCell {
     
     //MARK:- Constant
     
     private struct UI {
-        static let userImageSize: CGFloat = 50
+        static let basicMargin: CGFloat = 6
+        static let userImageSize: CGFloat = 80
     }
     
     
@@ -25,13 +27,12 @@ final class AllUserTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let userUniqueID: UILabel = {
+    let idLabel: UILabel = {
         let label = UILabel()
-        label.text = "text"
         return label
     }()
     
-    let userLoginName: UILabel = {
+    let loginLabel: UILabel = {
         let label = UILabel()
         return label
     }()
@@ -55,7 +56,7 @@ final class AllUserTableViewCell: UITableViewCell {
     
     private func setupUI() {
         
-        [userImageView, userUniqueID, userLoginName].forEach { addSubview($0) }
+        [userImageView, idLabel, loginLabel].forEach { addSubview($0) }
         
         // UserImage
         userImageView.snp.makeConstraints {
@@ -64,14 +65,26 @@ final class AllUserTableViewCell: UITableViewCell {
         }
         
         // ID
-        userUniqueID.snp.makeConstraints {
-            $0.top.equalTo(userImageView.snp.top).offset(8)
-            $0.leading.equalTo(userImageView.snp.trailing).offset(8)
+        idLabel.snp.makeConstraints {
+            $0.top.equalTo(userImageView.snp.top).offset(UI.basicMargin)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(UI.basicMargin)
+            $0.trailing.equalToSuperview().offset(-UI.basicMargin)
         }
         
         // Login
+        loginLabel.snp.makeConstraints {
+            $0.top.equalTo(idLabel.snp.bottom).offset(UI.basicMargin)
+            $0.leading.trailing.equalTo(idLabel)
+            $0.bottom.equalToSuperview().offset(-UI.basicMargin)
+        }
         
-        
+    }
+    
+    func configure(with user: UserModel) {
+        guard let profileURL = URL(string: user.profile) else { return }
+        userImageView.kf.setImage(with: profileURL)
+        idLabel.text = "\(user.id)"
+        loginLabel.text = user.name
     }
     
 }

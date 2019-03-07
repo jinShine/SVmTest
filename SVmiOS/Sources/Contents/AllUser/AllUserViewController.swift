@@ -17,7 +17,7 @@ final class AllUserViewController: UIViewController, ViewType {
     //MARK:- Constant
     
     struct UI {
-        static let estimatedRowHeight = CGFloat(60)
+        static let estimatedRowHeight = CGFloat(80)
     }
     
     //MARK:- UI Properties
@@ -32,13 +32,6 @@ final class AllUserViewController: UIViewController, ViewType {
         return tableView
     }()
     
-    private let indicatorView: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .gray)
-        return indicator
-    }()
-    
-    
-    
     //MARK:- Properties
     
     var viewModel: AllUserViewModelType!
@@ -49,7 +42,7 @@ final class AllUserViewController: UIViewController, ViewType {
     
     func setupUI() {
         
-        [tableView, indicatorView].forEach { view.addSubview($0) }
+        [tableView].forEach { view.addSubview($0) }
         
         // TableView
         tableView.snp.makeConstraints {
@@ -57,10 +50,6 @@ final class AllUserViewController: UIViewController, ViewType {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
-        // Indicator
-        indicatorView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
     }
     
     //MARK:- -> Event Binding
@@ -70,6 +59,24 @@ final class AllUserViewController: UIViewController, ViewType {
         rx.viewWillAppear
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: self.disposeBag)
+        
+        tableView.refreshControl?.rx.controlEvent(UIControlEvents.valueChanged)
+            .bind(to: viewModel.didPullToRefresh)
+            .disposed(by: self.disposeBag)
+        
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        
+        tableView.rx.willDisplayCell
+            .debug()
+            .bind(to: viewModel.willDisplayCell)
+            .disposed(by: self.disposeBag)
+        
+        tableView.rx.modelSelected(UserModel.self)
+            .bind(to: viewModel.didCellSelected)
+            .disposed(by: disposeBag)
+        
     }
     
     //MARK:- <- Rx UI Binding
@@ -78,15 +85,44 @@ final class AllUserViewController: UIViewController, ViewType {
         
         let datasource = RxTableViewSectionedReloadDataSource<AllUserData>(configureCell: { (_, tableView, indexPath, item) -> UITableViewCell in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AllUserTableViewCell.self)) as? AllUserTableViewCell else { return UITableViewCell() }
-            print("ITEMMMMMMMMMMMM!!!!!!!!!!!", item)
+            print("Datasource :", item)
+            cell.configure(with: item)
             return cell
         })
         
         viewModel.allUserArray
+            .debug("123123123")
             .drive(tableView.rx.items(dataSource: datasource))
             .disposed(by: self.disposeBag)
+        
+        viewModel.isRefreshing
+            .drive(onNext: { [weak self] isRefreshing in
+                self?.showRefreshingAnimation(isRefreshing)
+            })
+            .disposed(by: self.disposeBag)
+        
+        viewModel.showUserRepositories
+            .drive(onNext: { [weak self] userName in
+                let userRepositoriesViewController = ProvideObject.userRepositories(name: userName).viewController
+                self?.navigationController?.pushViewController(userRepositoriesViewController, animated: true)
+            })
+            .disposed(by: self.disposeBag)
+                
+//        viewModel.loadMore
+//            .drive(tableView.rx.items(dataSource: datasource))
+//            .disposed(by: self.disposeBag)
+        
     }
     
     //MARK:- Action Handler
+    
+    private func showRefreshingAnimation(_ isRefreshing: Bool) {
+        if !isRefreshing {
+            tableView.refreshControl?.endRefreshing()
+        }
+    }
+}
+
+extension AllUserViewController: UITableViewDelegate {
     
 }
