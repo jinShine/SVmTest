@@ -52,29 +52,17 @@ class UserInfomationHeaderCell: UITableViewHeaderFooterView {
         return label
     }()
     
-    let followsTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "follows :"
-        label.font = UI.basicFont
-        return label
-    }()
-    
     let followsValueLabel: UILabel = {
         let label = UILabel()
         label.font = UI.basicFont
-        return label
-    }()
-    
-    let followingTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "following :"
-        label.font = UI.basicFont
+        label.textAlignment = .left
         return label
     }()
     
     let followingValueLabel: UILabel = {
         let label = UILabel()
         label.font = UI.basicFont
+        label.textAlignment = .right
         return label
     }()
     
@@ -85,8 +73,6 @@ class UserInfomationHeaderCell: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
-        print("reuseIdentifier")
         setupUI()
     }
     
@@ -97,7 +83,7 @@ class UserInfomationHeaderCell: UITableViewHeaderFooterView {
     private func setupUI() {
         
         [userImageView, loginLabel, nameLabel, locationLabel, companyLabel,
-         followsTitleLabel, followsValueLabel, followingTitleLabel, followingValueLabel].forEach { addSubview($0) }
+         followsValueLabel, followingValueLabel].forEach { addSubview($0) }
         
         // UserImage
         userImageView.snp.makeConstraints {
@@ -129,32 +115,17 @@ class UserInfomationHeaderCell: UITableViewHeaderFooterView {
             $0.top.equalTo(locationLabel.snp.bottom).offset(UI.basicMargin)
             $0.leading.trailing.equalTo(locationLabel)
         }
-        
-        // Followers Title
-        followsTitleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal)
-        followsTitleLabel.snp.makeConstraints {
+
+        // Followers Value
+        followsValueLabel.snp.makeConstraints {
             $0.top.equalTo(companyLabel.snp.bottom).offset(UI.basicMargin)
             $0.leading.equalTo(companyLabel)
         }
         
-        // Followers Value
-        followsValueLabel.snp.makeConstraints {
-            $0.centerY.equalTo(followsTitleLabel)
-            $0.leading.equalTo(followsTitleLabel.snp.trailing).offset(UI.basicMargin)
-        }
-        
-        // Following Title
-        followingTitleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal)
-        followingTitleLabel.snp.makeConstraints {
-            $0.centerY.equalTo(followsValueLabel)
-            $0.leading.equalTo(followsValueLabel.snp.trailing).offset(UI.basicMargin * 2)
-        }
-        
-        
         // Following Value
         followingValueLabel.snp.makeConstraints {
-            $0.centerY.equalTo(followingTitleLabel)
-            $0.leading.equalTo(followingTitleLabel.snp.trailing).offset(UI.basicMargin)
+            $0.centerY.equalTo(followsValueLabel)
+            $0.leading.equalTo(followsValueLabel.snp.trailing).offset(UI.basicMargin * 3)
             $0.trailing.equalToSuperview().offset(-UI.basicMargin)
         }
     }
@@ -166,8 +137,8 @@ class UserInfomationHeaderCell: UITableViewHeaderFooterView {
         nameLabel.text = userDetailModel.name
         locationLabel.text = userDetailModel.location
         companyLabel.text = userDetailModel.company
-        followsValueLabel.text = "\(userDetailModel.followers)"
-        followingValueLabel.text = "\(userDetailModel.following)"
+        followsValueLabel.text = "follows : \(userDetailModel.followers)"
+        followingValueLabel.text = "following : \(userDetailModel.following)"
     }
     
 }

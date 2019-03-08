@@ -64,10 +64,6 @@ final class AllUserViewController: UIViewController, ViewType {
             .bind(to: viewModel.didPullToRefresh)
             .disposed(by: self.disposeBag)
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        
         tableView.rx.willDisplayCell
             .debug()
             .bind(to: viewModel.willDisplayCell)
@@ -90,8 +86,15 @@ final class AllUserViewController: UIViewController, ViewType {
             return cell
         })
         
+        viewModel.requestAllUserData
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        viewModel.requestLoadMore
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         viewModel.allUserArray
-            .debug("123123123")
             .drive(tableView.rx.items(dataSource: datasource))
             .disposed(by: self.disposeBag)
         
@@ -107,22 +110,14 @@ final class AllUserViewController: UIViewController, ViewType {
                 self?.navigationController?.pushViewController(userRepositoriesViewController, animated: true)
             })
             .disposed(by: self.disposeBag)
-                
-//        viewModel.loadMore
-//            .drive(tableView.rx.items(dataSource: datasource))
-//            .disposed(by: self.disposeBag)
-        
     }
-    
-    //MARK:- Action Handler
-    
+}
+
+//MARK:- Action Handler
+extension AllUserViewController {
     private func showRefreshingAnimation(_ isRefreshing: Bool) {
         if !isRefreshing {
             tableView.refreshControl?.endRefreshing()
         }
     }
-}
-
-extension AllUserViewController: UITableViewDelegate {
-    
 }

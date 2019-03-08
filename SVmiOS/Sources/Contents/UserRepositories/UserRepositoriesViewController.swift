@@ -16,9 +16,11 @@ final class UserRepositoriesViewController: UIViewController {
     private struct UI {
         static let estimatedHeaderHeight: CGFloat = 150
         static let estimatedRowHeight: CGFloat = 80
-        
     }
     
+    private struct Constant {
+        static let repositoriesCountPerPage: Int = 30
+    }
     
     //MARK:- UI Properties
     
@@ -30,11 +32,17 @@ final class UserRepositoriesViewController: UIViewController {
         tableView.estimatedSectionHeaderHeight = UI.estimatedHeaderHeight
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UI.estimatedRowHeight
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.tintColor = .gray
+        tableView.refreshControl = refreshControl
         tableView.register(UserInfomationHeaderCell.self, forHeaderFooterViewReuseIdentifier: String(describing: UserInfomationHeaderCell.self))
         tableView.register(UserRepositoriesCell.self, forCellReuseIdentifier: String(describing: UserRepositoriesCell.self))
         return tableView
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .gray
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        return refreshControl
     }()
     
     
@@ -45,7 +53,8 @@ final class UserRepositoriesViewController: UIViewController {
     private var gitHubService: GitHubServiceType?
     private var userDetailModel = UserDetailModel()
     private var userRepositories = [UserRepositoryModel]()
-    
+    private var countPerPage: Int = 30
+    private var pageCount: Int = 1
     
     
     //MARK:- Initialize
@@ -71,28 +80,15 @@ final class UserRepositoriesViewController: UIViewController {
         
         setupUI()
         
-        
-        
-        gitHubService?.requestGitHubUserDetail(name: userName ?? "", completion: { [weak self] response in
-            switch response {
-            case .success(let userDetailModel):
-                self?.userDetailModel = userDetailModel
-                self?.tableView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        })
-        
-        gitHubService?.requestGitHubUserRepositories(name: userName ?? "", completion: { [weak self] response in
-            switch response {
-            case .success(let userRepositoriesModel):
-                self?.userRepositories = userRepositoriesModel
-                self?.tableView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        })
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.fetchUserDetail()
+        fetchUserRepositories(page: pageCount)
+    }
+    
     
 
     
@@ -112,14 +108,48 @@ final class UserRepositoriesViewController: UIViewController {
     
     
     
-    //MARK:- Action Handle
-    
-    
-    
-    
     
 }
 
+//MARK:- Action Handle
+extension UserRepositoriesViewController {
+    
+    @objc private func refresh() {
+        fetchUserDetail()
+        fetchUserRepositories(page: countPerPage)
+        self.refreshControl.endRefreshing()
+    }
+    
+    private func fetchUserDetail() {
+        gitHubService?.requestGitHubUserDetail(name: userName ?? "", completion: { [weak self] response in
+            switch response {
+            case .success(let userDetailModel):
+                DispatchQueue.main.async {
+                    self?.userDetailModel = userDetailModel
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(ServiceError.requestFailed(error))
+            }
+        })
+    }
+    
+    private func fetchUserRepositories(page: Int) {
+        gitHubService?.requestGitHubUserRepositories(name: userName ?? "", page: page, completion: { [weak self] response in
+            switch response {
+            case .success(let userRepositoriesModel):
+                DispatchQueue.main.async {
+                    let _ = userRepositoriesModel.map { self?.userRepositories.append($0) }
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(ServiceError.requestFailed(error))
+            }
+        })
+    }
+}
+
+//MARK:- TableView DataSource
 extension UserRepositoriesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -135,17 +165,25 @@ extension UserRepositoriesViewController: UITableViewDataSource {
     }
 }
 
-
+//MARK:- TableView Delegate
 extension UserRepositoriesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let cell = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: String(describing: UserInfomationHeaderCell.self)
             ) as? UserInfomationHeaderCell else { return UITableViewCell() }
-        
-        print(userDetailModel)
+
         cell.configure(with: userDetailModel)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // LoadMore
+        if indexPath.row + 1 == countPerPage {
+            countPerPage += Constant.repositoriesCountPerPage
+            pageCount += 1
+            fetchUserRepositories(page: pageCount)
+        }
     }
 }

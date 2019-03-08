@@ -12,7 +12,6 @@ import Alamofire
 
 /*
  1. 모든 User 목록 https://developer.github.com/v3/users/#get-all-users
- https://api.github.com/users?since=135
  2. 특정 사용자의 기본 정보 https://developer.github.com/v3/users/#get-a-single-user
  3. 특정 사용자가 보유한 Repository(public 권한) 목록 https://developer.github.com/v3/repos/#list-user-repositories (‘page’ 로 페이징을 합니다.)
  */
@@ -20,7 +19,7 @@ import Alamofire
 enum Router {
     case allUser(since: Int)
     case userDetail(name: String)
-    case userRepo(name: String)
+    case userRepo(name: String, page: Int)
 }
 
 extension Router: TargetType {
@@ -40,11 +39,11 @@ extension Router: TargetType {
             return "/users"
         case .userDetail(let name):
             return "/users/\(name)"
-        case .userRepo(let name):
+        case .userRepo(let name, _):
             return "/users/\(name)/repos"
         }
     }
-//    https://api.github.com/users?client_id=075f9bae947051708b29&client_secret=e5593a561341875f9a5a768bca8d74b398aff81e&since=0
+
     var method: HTTPMethod {
         switch self {
         case .allUser, .userDetail, .userRepo:
@@ -67,10 +66,18 @@ extension Router: TargetType {
                 "client_id" : Router.clientID,
                 "client_secret" : Router.clientSecret
             ]
-        case .userDetail, .userRepo:
+        case .userDetail:
             return [:]
+        case .userRepo(_, let page):
+            return [
+                "page" : page
+            ]
         }
     }
+}
+
+// Rx Alamofire Request
+extension Router {
     
     static let manager: Alamofire.SessionManager = {
         let configuration = URLSessionConfiguration.default
@@ -97,7 +104,6 @@ extension Router: TargetType {
             return Disposables.create()
         })
     }
-    
 }
 
 extension Router: URLRequestConvertible {
@@ -107,7 +113,7 @@ extension Router: URLRequestConvertible {
             let url = self.baseURL.appendingPathComponent(self.path)
             var urlRequest = try URLRequest(url: url, method: self.method, headers: self.header)
             urlRequest = try URLEncoding.default.encode(urlRequest, with: self.parameter)
-            print(urlRequest)
+            print("Router .\(self) URL : ",urlRequest)
             return urlRequest
         }
     }

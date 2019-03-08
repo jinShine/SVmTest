@@ -121,7 +121,7 @@ class UserRepositoriesCell: UITableViewCell {
         
     }
     
-    // Method
+    //MARK:- Method
     
     private func convertTimezoneToDate(_ timezoneString: String) -> String {
         let dateFormatter = DateFormatter()

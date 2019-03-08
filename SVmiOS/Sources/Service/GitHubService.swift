@@ -12,6 +12,7 @@ import Alamofire
 
 struct GitHubService: GitHubServiceType {
     
+    // RX
     func requestGitHubAllUser(since: Int) -> Single<[UserModel]> {
         return Router.buildRequest(url: Router.allUser(since: since))
             .map { data throws in
@@ -20,6 +21,7 @@ struct GitHubService: GitHubServiceType {
             }
     }
     
+    //Swift
     func requestGitHubUserDetail(name: String, completion: @escaping (Result<UserDetailModel>) -> ()) {
         Alamofire.request(Router.userDetail(name: name))
             .validate(statusCode: 200..<400)
@@ -39,8 +41,8 @@ struct GitHubService: GitHubServiceType {
         }
     }
     
-    func requestGitHubUserRepositories(name: String, completion: @escaping (Result<[UserRepositoryModel]>) -> ()) {
-        Alamofire.request(Router.userRepo(name: name))
+    func requestGitHubUserRepositories(name: String, page: Int, completion: @escaping (Result<[UserRepositoryModel]>) -> ()) {
+        Alamofire.request(Router.userRepo(name: name, page: page))
             .validate(statusCode: 200..<400)
             .responseData { response in
                 switch response.result {

@@ -25,12 +25,17 @@ protocol AllUserViewModelType: ViewModelType {
     // UI
     var allUserArray: Driver<[AllUserData]> { get }
     var isRefreshing: Driver<Bool> { get }
-//    var loadMore: Driver<[AllUserData]> { get }
     var showUserRepositories: Driver<String> { get }
+    var requestAllUserData: Driver<Void> { get }
+    var requestLoadMore: Driver<Void> { get }
     
 }
 
 final class AllUserViewModel: AllUserViewModelType {
+    
+    private struct Constant {
+        static let repositoriesCountPerPage: Int = 30
+    }
     
     //MARK:- Properties
     //MARK: -> Event
@@ -44,57 +49,77 @@ final class AllUserViewModel: AllUserViewModelType {
     
     var allUserArray: Driver<[AllUserData]>
     let isRefreshing: Driver<Bool>
-//    let loadMore: Driver<[AllUserData]>
     let showUserRepositories: Driver<String>
-    
-    
+    let requestAllUserData: Driver<Void>
+    let requestLoadMore: Driver<Void>
     
     //MARK:- Initialize
     init(gitHubService: GitHubServiceType) {
         
+        // properties
+        var countPerPage: Int = 30
+        var allUsers = [UserModel]()
+        
+        // Refresh
         let onRefreshing = PublishSubject<Bool>()
         isRefreshing = onRefreshing.asDriver(onErrorJustReturn: false)
         
-        var loadMoreCount: Int = 0
+        // Datasource Array
+        let allUser = BehaviorRelay<[AllUserData]>(value: [])
+        allUserArray = allUser.asDriver(onErrorJustReturn: [])
+
         
-        allUserArray = Observable<Void>
+        // Request All User
+        requestAllUserData = Observable<Void>
             .merge([viewWillAppear, didPullToRefresh])
             .do { onRefreshing.onNext(true) }
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .flatMapLatest {
-                return gitHubService.requestGitHubAllUser(since: loadMoreCount)
+                return gitHubService.requestGitHubAllUser(since: 0)
                     .retry(2)
                     .do { onRefreshing.onNext(false) }
             }
+            .map{ userModel -> [UserModel] in
+                let _ = userModel.map { allUsers.append($0) }
+                return allUsers
+            }
             .map { [AllUserData(model: "", items: $0)] }
-            .asDriver(onErrorJustReturn: [])
+            .map { allUser.accept($0) }
+            .asDriver(onErrorJustReturn: ())
         
-        
+        // Cell Selected
          showUserRepositories = didCellSelected
             .map { $0.name }
             .asDriver(onErrorJustReturn: "")
         
-//        allUserArray = willDisplayCell
-//            .map { ($0, $1) }
-//            .filter { (_, indexPath) -> Bool in
-//                guard loadMoreCount != 0 else { return false }
-//                print("IIIIINNNNDDDEEEEPPPAATH", indexPath)
-//                if indexPath.row == loadMoreCount {
-//                    loadMoreCount += 45
-//                    return true
-//                }
-//                return false
-//            }
-//            .do { onRefreshing.onNext(true) }
-//            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-//            .flatMapLatest { _ in
-//                return gitHubService.requestGitHubAllUser(since: loadMoreCount)
-//                    .retry(2)
-//                    .do { onRefreshing.onNext(false) }
-//            }
-//            .map { [AllUserData(model: "", items: $0)] }
-//            .asDriver(onErrorJustReturn: [])
-
+        // WiiDisplacy LoadMore
+        requestLoadMore = willDisplayCell
+            .filter { (_, indexPath) in
+                if indexPath.row + 1 == countPerPage {
+                    /*
+                     < Issue >
+                     Get all users의 Response중 없는 유저도 있어서 불러오는 갯수와 ID가 같지 않아 불러올때 중복되는 부분.
+                    */
+                    countPerPage += Constant.repositoriesCountPerPage
+                    return true
+                }
+                return false
+            }
+            .do { onRefreshing.onNext(true) }
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .flatMapLatest { _ in
+                return gitHubService.requestGitHubAllUser(since: countPerPage)
+                    .retry(2)
+                    .do { onRefreshing.onNext(false) }
+            }
+            .map{ userModel -> [UserModel] in
+                let _ = userModel.map { allUsers.append($0) }
+                return allUsers
+            }
+            .map { [AllUserData(model: "", items: $0)] }
+            .map { allUser.accept($0) }
+            .asDriver(onErrorJustReturn: ())
+        
     }
     
 }
