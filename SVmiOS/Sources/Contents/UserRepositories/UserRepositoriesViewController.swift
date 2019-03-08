@@ -105,10 +105,6 @@ final class UserRepositoriesViewController: UIViewController {
         }
     }
     
-    
-    
-    
-    
 }
 
 //MARK:- Action Handle

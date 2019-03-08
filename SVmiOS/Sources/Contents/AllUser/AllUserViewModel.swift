@@ -87,10 +87,12 @@ final class AllUserViewModel: AllUserViewModelType {
             .map { allUser.accept($0) }
             .asDriver(onErrorJustReturn: ())
         
+        
         // Cell Selected
          showUserRepositories = didCellSelected
             .map { $0.name }
             .asDriver(onErrorJustReturn: "")
+        
         
         // WiiDisplacy LoadMore
         requestLoadMore = willDisplayCell
