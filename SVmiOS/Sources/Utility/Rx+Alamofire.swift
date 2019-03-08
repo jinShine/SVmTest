@@ -11,6 +11,7 @@ import RxSwift
 import Alamofire
 
 extension Reactive where Base: SessionManager {
+    
     func request(url: URLRequestConvertible) -> Single<Data> {
         return Single.create(subscribe: { (observer) -> Disposable in
             self.base.request(url)

@@ -8,7 +8,6 @@
 
 import Foundation
 
-//name, description, stargazers_count, watchers_count, created_at 값을 표시해주세요.)
 
 struct UserRepositoryModel: Decodable {
     var id: Int
