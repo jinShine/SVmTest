@@ -21,7 +21,7 @@ struct GitHubService: GitHubServiceType {
             }
     }
     
-    //Swift
+    // Swift
     func requestGitHubUserDetail(name: String, completion: @escaping (Result<UserDetailModel>) -> ()) {
         Alamofire.request(Router.userDetail(name: name))
             .validate(statusCode: 200..<400)
